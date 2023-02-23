@@ -1,53 +1,30 @@
-﻿void InputMatrix(int[,] matrix)
+﻿void InputMatrix(int[,,] matrix)
 {
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
-            matrix[i, j] = new Random().Next(1, 21); // [1, 20]
-    }
-}
-
-void PrintMatrix(int[,] matrix)
-{
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-            Console.Write($"{matrix[i, j]} \t");
-        Console.WriteLine();
-    }
-}
-
-
-void SortedRowMatrix(int [,] matrix){
-    
- for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        {
-            for(int k=0;k<matrix.GetLength(1)-1 ; k++)
-            {
-                for(int m=0; m<matrix.GetLength(1)-1; m++)
-                {
-                    if(matrix[i, m]<matrix[i, m+1])
-                    {
-                        int temp= matrix[i,m];
-                        matrix[i, m]=matrix[i, m+1];
-                        matrix[i, m+1]=temp;
-                    }
-                }
-            }
+        for(int k=0; k<matrix.GetLength(2); k++){
+            matrix[i, j, k] = new Random().Next(10, 100);
         }
     }
+}
 
+void PrintMatrix(int[,,] matrix)
+{
+    for (int i = 0; i < matrix.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrix.GetLength(1); j++){
+            for(int k=0; k<matrix.GetLength(2); k++){
+                Console.Write($"{matrix[i, j, k]} ({i},{j},{k}) \t");
+                }
+                Console.WriteLine(); 
+        }
+    }
 }
 
 Console.Clear();
-Console.WriteLine("Введите размер массива: ");
+Console.Write("Введите размер массива: ");
 int[] size = Console.ReadLine().Split().Select(x => int.Parse(x)).ToArray();
-int[,] matrix = new int[size[0], size[1]];
+int[,,] matrix = new int[size[0], size[1], size[2]];
 InputMatrix(matrix);
-Console.WriteLine("Начальный массив: ");
-PrintMatrix(matrix);
-SortedRowMatrix(matrix);
-Console.WriteLine("Упорядоченный массив: ");
 PrintMatrix(matrix);
