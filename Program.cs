@@ -1,30 +1,40 @@
-﻿void InputMatrix(int[,,] matrix)
-{
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        for(int k=0; k<matrix.GetLength(2); k++){
-            matrix[i, j, k] = new Random().Next(10, 100);
+﻿Console.WriteLine("Введите количество строк, которые необходимо вывести на экран: ");
+
+int row= Convert.ToInt32(Console.ReadLine());
+int [,] triangle= new int [row,row];
+const int cellWidth=3;
+
+void FillTriangle(){
+    for(int i=0 ; i<row; i++){
+        triangle[i,0]=1;
+        triangle[i,i]=1;
+    }
+    
+    for(int i=2; i<row; i++){
+        for(int j=1 ; j<=i; j++){
+            triangle [i,j]= triangle[i-1,j-1]+triangle[i-1,j];
         }
+    }
+
+}
+
+
+void Magic(){
+    int col=cellWidth*row;
+    for(int i=0; i<row; i++){
+        for(int j=0; j<=i; j++){
+            Console.SetCursorPosition(col, i+1);
+            if(triangle[i,j]!=0){
+                Console.Write($"{triangle[i,j],cellWidth}");
+            }
+            col+=cellWidth*2;
+        }
+        col=cellWidth*row-cellWidth*(i+1);
+        Console.WriteLine();
     }
 }
 
-void PrintMatrix(int[,,] matrix)
-{
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++){
-            for(int k=0; k<matrix.GetLength(2); k++){
-                Console.Write($"{matrix[i, j, k]} ({i},{j},{k}) \t");
-                }
-                Console.WriteLine(); 
-        }
-    }
-}
-
-Console.Clear();
-Console.Write("Введите размер массива: ");
-int[] size = Console.ReadLine().Split().Select(x => int.Parse(x)).ToArray();
-int[,,] matrix = new int[size[0], size[1], size[2]];
-InputMatrix(matrix);
-PrintMatrix(matrix);
+Console.ReadLine();
+FillTriangle();
+Console.ReadLine();
+Magic();
